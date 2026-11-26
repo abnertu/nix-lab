@@ -17,5 +17,4 @@ in
   "minio-console.age".publicKeys = devUsers;
   "user-youmin-password.age".publicKeys = devUsers;
   "syncwke-secret.age".publicKeys = devUsers;
-  "netbird-wt0-setup-key.age".publicKeys = devUsers;
 }

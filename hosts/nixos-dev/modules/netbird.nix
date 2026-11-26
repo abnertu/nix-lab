@@ -1,7 +1,7 @@
-{ config, ... }:
 {
   services.resolved.enable = true;
   services.netbird = {
+    useRoutingFeatures = "server";
     clients.default = {
       name = "netbird";
       port = 51820;
@@ -9,14 +9,6 @@
       hardened = false;
       openFirewall = true;
       openInternalFirewall = true;
-      login = {
-        enable = true;
-        setupKeyFile = config.age.secrets."netbird-wt0-setup-key".path;
-      };
     };
-  };
-
-  age.secrets = {
-    "netbird-wt0-setup-key".file = ../../../secrets/netbird-wt0-setup-key.age;
   };
 }

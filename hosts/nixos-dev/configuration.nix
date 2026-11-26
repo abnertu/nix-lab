@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   imports = lib.flatten [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./modules/system.nix
+    ./modules/nuget-server.nix
 
     (map lib.custom.relativeToRoot [
       #
@@ -84,4 +85,71 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
+
+  users.groups.gitlab-runner-frontend = { };
+  users.groups.gitlab-runner-dotnet = { };
+
+  users.users.gitlab-runner-frontend = {
+    isSystemUser = true;
+    uid = 2101;
+    group = "gitlab-runner-frontend";
+
+    home = "/var/lib/gitlab-runner-frontend";
+    createHome = true;
+
+    shell = pkgs.bashInteractive;
+
+    linger = true;
+
+    subUidRanges = [
+      {
+        startUid = 200000;
+        count = 65536;
+      }
+    ];
+
+    subGidRanges = [
+      {
+        startGid = 200000;
+        count = 65536;
+      }
+    ];
+  };
+
+  users.users.gitlab-runner-dotnet = {
+    isSystemUser = true;
+    uid = 2102;
+    group = "gitlab-runner-dotnet";
+
+    home = "/var/lib/gitlab-runner-dotnet";
+    createHome = true;
+
+    shell = pkgs.bashInteractive;
+
+    linger = true;
+
+    subUidRanges = [
+      {
+        startUid = 300000;
+        count = 65536;
+      }
+    ];
+
+    subGidRanges = [
+      {
+        startGid = 300000;
+        count = 65536;
+      }
+    ];
+  };
+
+  users.groups.nuget-server = { };
+
+  users.users.nuget-server = {
+    isSystemUser = true;
+    group = "nuget-server";
+
+    home = "/var/lib/nuget-server";
+    createHome = true;
+  };
 }

@@ -22,6 +22,7 @@
   networking.firewall.allowedTCPPorts = [
     80 # HTTP
     443 # HTTPS
+    8080
   ];
   networking.nat = {
     enable = true;
@@ -30,10 +31,12 @@
     # Allow forwarding for Tailscale subnet (100.64.0.0/10)
     internalIPs = [ "100.64.0.0/10" ];
   };
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
+  networking.enableIPv6 = false;
+
+  # boot.kernel.sysctl = {
+  #   "net.ipv4.ip_forward" = 1;
+  #   "net.ipv6.conf.all.forwarding" = 1;
+  # };
 
   # Programs
   users.defaultUserShell = pkgs.zsh;

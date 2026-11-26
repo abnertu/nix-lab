@@ -61,7 +61,6 @@
 
   services.tailscale = {
     enable = true;
-    useRoutingFeatures = "both";
     openFirewall = true;
     authKeyFile = config.age.secrets."headscale-authkey".path;
     extraUpFlags = [

@@ -8,6 +8,12 @@
 {
   environment.systemPackages = with pkgs; [
     minio-client
+    podman
+    git
+    curl
+    jq
+    gnumake
+    dotnetCorePackages.sdk_9_0-bin
   ];
 
   services.minio = {
